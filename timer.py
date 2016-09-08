@@ -20,7 +20,7 @@ class Timer(object):
 
     def Set(self, mn, sec):
         """ Setting the timer. """
-        # ints are used for the countdown
+        # int mn, int sec for the countdown
         self.mn = mn
         self.sec = sec
         # vaues stored away for Reset() method
@@ -38,7 +38,7 @@ class Timer(object):
 
         #time.sleep(1) # for now use wx.Timer() object to control the delay !!!
 
-    def Display(self):
+    def GetDisplay(self):
         """
         Returns a dict of int mn, int sec, string 'mn:sec'
         """
@@ -56,20 +56,21 @@ class Timer(object):
         timerVals = {'mn':self.mn, 'sec':self.sec, 'display':disp}
         return timerVals
 
-    def IsRunning(self):
-        """ A flag for starting and stopping the timer. """
-        if self.status:
-            self.status = False
-        else:
-            self.status = True
+    def Start(self):
+        """ A flag for starting the timer. """
+        self.status = True
 
-    def RunStatus(self):
+    def Stop(self):
+        """ A flag for stopping the timer. """
+        self.status = False
+
+    def GetStatus(self):
         """ Returns the current run status of the timer. """
         return self.status
 
     def Reset(self):
         """ Resets the timer to previous self.Set value. """
-        # make sure the timer is stopped
+        # stop the timer first
         if self.status:
             self.status = False
         # reset mn/sec values
