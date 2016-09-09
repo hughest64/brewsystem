@@ -6,11 +6,13 @@ for setting the timer via the "set" menu option -
 - txtCtrl boxes for MN and Sec
 - Save button to bind those values to timer.Set() method
 - cancel button
+- limit range for sec to 0-60? - min/max variable for spin boxes
+  - wx.SpinCtrl()
 
 # the new window for setting the timer
-class TimerSet(wx.Frame):
+class SetTimer(wx.Frame):
     def __init__(self, *args, **kwargs):
-        super(TimerSet, self).__init__(*args, **kwargs)
+        super(SetTimer, self).__init__(*args, **kwargs)
         
         panel = wx.Panel(self)
         
@@ -19,30 +21,34 @@ class TimerSet(wx.Frame):
         clbtn = wx.Button(self, label='Close', pos=(70, 120))
         
         #static text labels
-        #stMn = wx.StaticText(self, 'Min', (20, 20))
-        #stSec = wx.StaticText(self, 'Sec', (20, 70))
+        wx.StaticText(self, 'Min', (20, 20))
+        wx.StaticText(self, 'Sec', (20, 70))
         
-        #textctrl for mn
-        #textctrl for sec
+        #spin boxes for setting the timer mn/sec vals
+        self.sc1 = wx.SpinCtrl(self, -1, 'Min', (80, 15), (60, -1), min=0, max=120)
+        self.sc2 = wx.SpinCtrl(self, -1, 'Sec', (80, 65), (60, -1), min=0, max=59)
         
         #button bindings
+        svbtn.Bind(EVT_BUTTON, self.OnSave)
+        clbtn.Bind(EVT_BUTTON, self.OnCancel)
         
         self.SetSize((250, 250))
-        self.SetTitle(TITLE)
+        self.SetTitle("Set Timer")
         self.Centre()
         
     def ShowTime(self, e):
         self.Show(True)
         
-    def OnSave(self,e):
+    def OnSave(self, e):
         # method for setting timer (OnSet)
+        pass
+        
+    sed OnCancel(self, e)"
         pass
 
 # the binding in the top level frame        
-self.Bind(wx.EVT_MENU, TimerSet.Showtime,  fitemTwo)
+self.Bind(wx.EVT_MENU, SetTimer.ShowTime, fitemTwo)
 
-- limit range for sec to 0-60? - min/max variable for spin boxes
-  - wx.SpinCtrl()
 - should you be able to populate it from a beer.xml file?
 
 for incoororating hop additions via beer.xml file
