@@ -37,14 +37,17 @@ class SetTimer(wx.Frame):
         self.Centre()
         
     def ShowTime(self, e):
+        """ Show the widow """
         self.Show(True)
         
     def OnSave(self, e):
-        # method for setting timer (OnSet)
-        pass
+        """ Apply the new timver values and close the window """
+        # need to set values from display dict//Timer.GetDisplay() !!!
+        self.Close(True)
         
-    sed OnCancel(self, e)"
-        pass
+    def OnCancel(self, e)"
+        """ Close the window withough making changes """
+        self.Close(True) # need to do a Destroy()?
 
 # the binding in the top level frame        
 self.Bind(wx.EVT_MENU, SetTimer.ShowTime, fitemTwo)
