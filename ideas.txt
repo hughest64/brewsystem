@@ -8,7 +8,16 @@ for setting the timer via the "set" menu option -
 - limit range for sec to 0-60?
 - http://zetcode.com/wxpython/tips/ for reference
 
+for incoororating hop additions via beer.xml file
+- boil sub class for timer.py
+- pop up dialog with hop type/amt at apporoproate time
+- audible alert?
+
 general cleanup - 
+- add backbround color to Frame
 - remove fitemTwo from the firste EVT_MENU biniding
 - create OnRefresh mehod for common clearing/redrawing/rebinding that happens in several places
 - add 00:00 timer check to OnRunning() method (stop the wxtimer)
+
+future - 
+- layout elements with grid sizers
