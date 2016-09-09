@@ -1,6 +1,6 @@
 for setting the timer via the "set" menu option - 
 - create a EVT_MENU binding for a new frame.
-- incoorp .Show() to open the new window/frame
+- use .Show() to open the new window/frame
 - make the new frame seperate class?
 - txtCtrl boxes for MN and Sec
 - Save button to bind those values to timer.Set() method
