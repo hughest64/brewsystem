@@ -10,21 +10,24 @@ for setting the timer via the "set" menu option -
 # the new window for setting the timer
 class TimerSet(wx.Frame):
     def __init__(self, *args, **kwargs):
-        super(World, self).__init__(*args, **kwargs)
+        super(TimerSet, self).__init__(*args, **kwargs)
         
         panel = wx.Panel(self)
         
-        #save button
-        #cancel button
+        #buttons
+        svbtn = wx.Button(self, label='Save', pos=(20, 120))
+        clbtn = wx.Button(self, label='Close', pos=(70, 120))
         
-        #static text label for sn
-        #static text label for sec
+        #static text labels
+        #stMn = wx.StaticText(self, 'Min', (20, 20))
+        #stSec = wx.StaticText(self, 'Sec', (20, 70))
+        
         #textctrl for mn
         #textctrl for sec
         
         #button bindings
         
-        self.SetSize(SIZE)
+        self.SetSize((250, 250))
         self.SetTitle(TITLE)
         self.Centre()
         
