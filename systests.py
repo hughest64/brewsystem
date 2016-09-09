@@ -1,13 +1,9 @@
 import wx # wxpython is being used for our gui
 from timer import * # the brewing Timer class
 """
-USING THE NATIVE TIMER EVENT WORKS NICELY, BUT NEED TO WORKS ON
-OTHER EVENTS (CLOSE, ETC.) I'M CLOSER!!!
-
 TODO: !!!
 - add box for timer display
 - make start button toggle to change label when running
-- add reset method and binding
 - menu option to set timer time (dialog box?)
 - add hop add parsing to timer(boil) !!!
 """
@@ -54,6 +50,7 @@ class World(wx.Frame):  #Creating our Window
         self.Bind(wx.EVT_TIMER, self.OnTimer, self.ti)
         stbtn.Bind(wx.EVT_BUTTON, self.OnRunning)
         cbtn.Bind(wx.EVT_BUTTON, self.OnClose)
+        rbtn.Bind(wx.EVT_BUTTON, self.OnReset)
 
         # setting display details
         self.SetSize(SIZE)
@@ -62,33 +59,35 @@ class World(wx.Frame):  #Creating our Window
         self.Show(True)
 
         # draw the initial timer
-        self.vals = self.timer.Display()
+        self.vals = self.timer.GetDisplay()
         self.dc.DrawText(self.vals['display'], 260, 50)
 
     def OnTimer(self, e):
         """ method to draw the timer """
-        if self.vals['mn'] >= 0 and self.timer.RunStatus():
+        if self.vals['mn'] >= 0 and self.timer.GetStatus():
+            # decrement the timer
+            self.timer.Run()
+            self.vals = self.timer.GetDisplay()
             # clear the previous value and draw the new
             self.dc.Clear()
             self.dc.DrawText(self.vals['display'], 260, 50)
-            # decrement the timer
-            self.timer.Run()
-            self.vals = self.timer.Display()
-        else:
-            self.dc.Clear()
-            self.dc.DrawText("Done!", 260, 50)
-            self.ti.Stop()
-            # TODO: add check for hop additon alerts? !!!
 
     def OnRunning(self, e):
         """ Start and stop the timer. """
-        if not self.timer.RunStatus():
-            self.timer.IsRunning()
+        if not self.timer.GetStatus():
             self.ti.Start(1000)
+            self.timer.Start()
 
         else:
-            self.timer.IsRunning()
+            self.timer.Stop()
             self.ti.Stop()
+
+    def OnReset(self, e):
+        """ reset the timer """
+        self.timer.Reset()
+        self.vals = self.timer.GetDisplay()
+        self.dc.Clear()
+        self.dc.DrawText(self.vals['display'], 260, 50)
 
     def OnClose(self, e):
         """ close the app """
