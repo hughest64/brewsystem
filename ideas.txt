@@ -38,7 +38,8 @@ class TimerSet(wx.Frame):
 # the binding in the top level frame        
 self.Bind(wx.EVT_MENU, TimerSet.Showtime,  fitemTwo)
 
-- limit range for sec to 0-60?
+- limit range for sec to 0-60? - min/max variable for spin boxes
+  - wx.SpinCtrl()
 - should you be able to populate it from a beer.xml file?
 
 for incoororating hop additions via beer.xml file
