@@ -3,7 +3,6 @@ from timer import * # the brewing Timer class
 """
 TODO: !!!
 - add box for timer display
-- make start button toggle to change label when running
 - menu option to set timer time (dialog box?)
 - add hop add parsing to timer(boil) !!!
 """
@@ -23,7 +22,7 @@ class World(wx.Frame):  #Creating our Window
         panel = wx.Panel(self)
 
         # buttons
-        stbtn = wx.Button(self, label='Start', pos=(200,150))
+        self.stbtn = wx.Button(self, label='Start', pos=(200,150))
         rbtn = wx.Button(self, label='Reset', pos=(275,150))
         cbtn = wx.Button(self, label='Close', pos=(350,150))
 
@@ -43,12 +42,12 @@ class World(wx.Frame):  #Creating our Window
         #intializing the timer
         self.timer = Timer()
         self.timer.Set(0, 10) # this needs it's own method and binding !!!
-        self.ti = wx.Timer(self)
+        self.wxtimer = wx.Timer(self)
 
         # event bindings
         self.Bind(wx.EVT_MENU, self.OnClose, fitemOne, fitemTwo)
-        self.Bind(wx.EVT_TIMER, self.OnTimer, self.ti)
-        stbtn.Bind(wx.EVT_BUTTON, self.OnRunning)
+        self.Bind(wx.EVT_TIMER, self.OnTimer, self.wxtimer)
+        self.stbtn.Bind(wx.EVT_BUTTON, self.OnRunning)
         cbtn.Bind(wx.EVT_BUTTON, self.OnClose)
         rbtn.Bind(wx.EVT_BUTTON, self.OnReset)
 
@@ -65,6 +64,7 @@ class World(wx.Frame):  #Creating our Window
     def OnTimer(self, e):
         """ method to draw the timer """
         if self.vals['mn'] >= 0 and self.timer.GetStatus():
+
             # decrement the timer
             self.timer.Run()
             self.vals = self.timer.GetDisplay()
@@ -72,15 +72,19 @@ class World(wx.Frame):  #Creating our Window
             self.dc.Clear()
             self.dc.DrawText(self.vals['display'], 260, 50)
 
+
+
     def OnRunning(self, e):
         """ Start and stop the timer. """
         if not self.timer.GetStatus():
-            self.ti.Start(1000)
+            self.stbtn.SetLabel('Pause')
+            self.wxtimer.Start(1000)
             self.timer.Start()
 
         else:
             self.timer.Stop()
-            self.ti.Stop()
+            self.wxtimer.Stop()
+            self.stbtn.SetLabel('Start')
 
     def OnReset(self, e):
         """ reset the timer """
