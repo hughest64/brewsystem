@@ -7,6 +7,7 @@ for setting the timer via the "set" menu option -
 - cancel button
 - limit range for sec to 0-60?
 - http://zetcode.com/wxpython/tips/ for reference
+- should you be able to populate it from a beer.xml file?
 
 for incoororating hop additions via beer.xml file
 - boil sub class for timer.py
