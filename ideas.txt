@@ -1,0 +1,14 @@
+for setting the timer via the "set" menu option - 
+- create a EVT_MENU binding for a new frame.
+- incoorp .Show() to open the new window/frame
+- make the new frame seperate class?
+- txtCtrl boxes for MN and Sec
+- Save button to bind those values to timer.Set() method
+- cancel button
+- limit range for sec to 0-60?
+- http://zetcode.com/wxpython/tips/ for reference
+
+general cleanup - 
+- remove fitemTwo from the firste EVT_MENU biniding
+- create OnRefresh mehod for common clearing/redrawing/rebinding that happens in several places
+- add 00:00 timer check to OnRunning() method (stop the wxtimer)
