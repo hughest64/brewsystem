@@ -64,15 +64,12 @@ class World(wx.Frame):  #Creating our Window
     def OnTimer(self, e):
         """ method to draw the timer """
         if self.vals['mn'] >= 0 and self.timer.GetStatus():
-
             # decrement the timer
             self.timer.Run()
             self.vals = self.timer.GetDisplay()
             # clear the previous value and draw the new
             self.dc.Clear()
             self.dc.DrawText(self.vals['display'], 260, 50)
-
-
 
     def OnRunning(self, e):
         """ Start and stop the timer. """
