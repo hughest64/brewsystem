@@ -1,12 +1,44 @@
 for setting the timer via the "set" menu option - 
+- http://zetcode.com/wxpython/tips/ for reference
 - create a EVT_MENU binding for a new frame.
 - use .Show() in a new method perhaps SetFrame()? to open the new window/frame
 - make the new frame seperate class?
 - txtCtrl boxes for MN and Sec
 - Save button to bind those values to timer.Set() method
 - cancel button
+
+# the new window for setting the timer
+class TimerSet(wx.Frame):
+    def __init__(self, *args, **kwargs):
+        super(World, self).__init__(*args, **kwargs)
+        
+        panel = wx.Panel(self)
+        
+        #save button
+        #cancel button
+        
+        #static text label for sn
+        #static text label for sec
+        #textctrl for mn
+        #textctrl for sec
+        
+        #button bindings
+        
+        self.SetSize(SIZE)
+        self.SetTitle(TITLE)
+        self.Centre()
+        
+    def ShowTime(self, e):
+        self.Show(True)
+        
+    def OnSave(self,e):
+        # method for setting timer (OnSet)
+        pass
+
+# the binding in the top level frame        
+self.Bind(wx.EVT_MENU, TimerSet.Showtime,  fitemTwo)
+
 - limit range for sec to 0-60?
-- http://zetcode.com/wxpython/tips/ for reference
 - should you be able to populate it from a beer.xml file?
 
 for incoororating hop additions via beer.xml file
