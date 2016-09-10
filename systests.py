@@ -1,4 +1,4 @@
-import wx # using wxpython for the GUI
+import wx # wxpython is being used for our gui
 from timer import * # the brewing Timer class
 """
 TODO: !!!
@@ -39,27 +39,29 @@ class SetTimer(wx.Frame):
         self.Centre()
 
     def ShowTime(self, e):
-        """ Show the widow """
+        """ Show the window """
+        self.sc1.SetValue(0)
+        self.sc2.SetValue(0)
         self.Show(True)
 
     def OnSave(self, e):
         """
-        Apply the new timer values and close the window
+        Apply the new timer values, close the window,
         and propigate the event to the class.
         """
         mn = self.sc1.GetValue()
         sec = self.sc2.GetValue()
         TIMER.Set(mn, sec)
         e.Skip()
-        self.Close()
+        self.Hide()
 
     def OnSaveClick(self, e):
         """ Propigate the event to the World class """
         e.Skip()
 
     def OnCancel(self, e):
-        """ Close the window withough making changes """
-        self.Close(True)
+        """ Close the window without making changes """
+        self.Hide()
 
 class World(wx.Frame):
 
@@ -70,7 +72,7 @@ class World(wx.Frame):
 
     def InitUI(self):
         """ Set up the interface """
-        panel = SetTimer(self) # the should be creted from the SetTimer class
+        panel = SetTimer(self)
 
         # buttons
         self.stbtn = wx.Button(self, label='Start', pos=(200,125))
@@ -90,7 +92,7 @@ class World(wx.Frame):
         font = wx.Font(30, wx.ROMAN, wx.NORMAL, wx.BOLD)
         self.dc.SetFont(font)
 
-        #intializing the wx.Timer()
+        # intializing the wx.Timer()
         self.wxtimer = wx.Timer(self)
         settimer = SetTimer(self)
 
@@ -114,17 +116,17 @@ class World(wx.Frame):
         self.dc.DrawText(self.vals['display'], 260, 50)
 
     def OnRefresh(self, e):
-        """ Used to reset the display. """
+        """ Reset the display. """
         self.vals = TIMER.GetDisplay()
         self.dc.Clear()
         self.dc.DrawText(self.vals['display'], 260, 50)
 
     def OnTimer(self, e):
-        """ Method to draw the timer """
+        """ Decrement and redraw the timer """
         if self.vals['mn'] >= 0 and TIMER.GetStatus():
             # decrement the timer
             TIMER.Run()
-            # reset the display
+            # redraw the display
             self.OnRefresh(e)
             # stop once we are at '00:00'
             if self.vals['display'] == '00:00':
