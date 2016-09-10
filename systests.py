@@ -9,6 +9,7 @@ TODO: !!!
 ### CONSTANTS ###
 SIZE = ((640, 480))
 TITLE = 'Brewsys'
+TIMER = Timer()
 
 class World(wx.Frame):  #Creating our Window
 
@@ -19,7 +20,7 @@ class World(wx.Frame):  #Creating our Window
 
     def InitUI(self):
         """ Set up the interface """
-        panel = wx.Panel(self)
+        #panel = SetTimer(self)
 
         # buttons
         self.stbtn = wx.Button(self, label='Start', pos=(200,150))
@@ -40,12 +41,13 @@ class World(wx.Frame):  #Creating our Window
         self.dc.SetFont(font)
 
         #intializing the timer
-        self.timer = Timer()
-        self.timer.Set(0, 10) # this needs it's own method and binding !!!
+        TIMER.Set(0, 10) # this needs it's own method and binding !!!
         self.wxtimer = wx.Timer(self)
+        #settimer = SetTimer(self)
 
         # event bindings
-        self.Bind(wx.EVT_MENU, self.OnClose, fitemOne, fitemTwo)
+        self.Bind(wx.EVT_MENU, self.OnClose, fitemOne)
+        #self.Bind(wx.EVT_MENU, settimer.ShowTime, fitemTwo)
         self.Bind(wx.EVT_TIMER, self.OnTimer, self.wxtimer)
         self.stbtn.Bind(wx.EVT_BUTTON, self.OnRunning)
         cbtn.Bind(wx.EVT_BUTTON, self.OnClose)
@@ -58,41 +60,59 @@ class World(wx.Frame):  #Creating our Window
         self.Show(True)
 
         # draw the initial timer
-        self.vals = self.timer.GetDisplay()
+        self.vals = TIMER.GetDisplay()
+        self.dc.DrawText(self.vals['display'], 260, 50)
+
+    def OnRefresh(self, e):
+        self.vals = TIMER.GetDisplay()
+        self.dc.Clear()
         self.dc.DrawText(self.vals['display'], 260, 50)
 
     def OnTimer(self, e):
         """ method to draw the timer """
-        if self.vals['mn'] >= 0 and self.timer.GetStatus():
-            # decrement the timer
-            self.timer.Run()
-            self.vals = self.timer.GetDisplay()
-            # clear the previous value and draw the new
-            self.dc.Clear()
-            self.dc.DrawText(self.vals['display'], 260, 50)
-
-    def OnRunning(self, e):
-        """ Start and stop the timer. """
-        if not self.timer.GetStatus():
-            self.stbtn.SetLabel('Pause')
-            self.wxtimer.Start(1000)
-            self.timer.Start()
-
-        else:
-            self.timer.Stop()
+        if self.vals['display'] == '00:00':
+            TIMER.Stop()
             self.wxtimer.Stop()
             self.stbtn.SetLabel('Start')
 
+        elif self.vals['mn'] >= 0 and TIMER.GetStatus():
+            # decrement the timer
+            TIMER.Run()
+            self.OnRefresh(e)
+
+    def OnRunning(self, e):
+        """ Start and stop the timer. """
+        #if self.vals['Display'] == '00:00':
+
+        if not TIMER.GetStatus() and self.vals['display'] != '00:00':
+            self.stbtn.SetLabel('Pause')
+            self.wxtimer.Start(1000)
+            TIMER.Start()
+
+        else:
+            TIMER.Stop()
+            self.wxtimer.Stop()
+            self.stbtn.SetLabel('Start')
+
+    def OnSet(self, mn, sec, e):
+        #print mn, sec
+        TIMER.Set(mn, sec)
+        self.OnRefresh(e)
+        #self.vals = TIMER.GetDisplay()
+        #self.dc.Clear()
+        #self.dc.DrawText(self.vals['display'], 260, 50)
+
     def OnReset(self, e):
         """ reset the timer """
-        self.timer.Reset()
-        self.vals = self.timer.GetDisplay()
-        self.dc.Clear()
-        self.dc.DrawText(self.vals['display'], 260, 50)
+        self.stbtn.SetLabel('Start')
+        TIMER.Reset()
+        self.OnRefresh(e)
 
     def OnClose(self, e):
         """ close the app """
         self.Close(True)
+
+
 
 # run the app
 if __name__ == '__main__':
