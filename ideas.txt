@@ -64,14 +64,14 @@ for incoororating hop additions via beer.xml file
 general cleanup - 
 - add backbround color to Frame - DONE
 - remove fitemTwo from the first EVT_MENU biniding - DONE
-- create OnRefresh method for common clearing/redrawing/rebinding that happens in several places
-- add 00:00 timer check to OnRunning() method (stop the wxtimer)
+- create OnRefresh method for common clearing/redrawing/rebinding that happens in several places - DONE
+- add 00:00 timer check to OnRunning() method (stop the wxtimer) -DONE
 
 future - 
 - layout elements with grid sizers
 
 ### new idea ###
-- create Timer() object globally
+- create Timer() object globally - DONE
 - open new frame class via menu
 - use timer.Set() in that class
 - e.Skip() to pass it back to World class
