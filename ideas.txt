@@ -1,51 +1,53 @@
 for setting the timer via the "set" menu option - 
 - http://zetcode.com/wxpython/tips/ for reference
-- create a EVT_MENU binding for a new frame.
-- use .Show() in a new method perhaps SetFrame()? to open the new window/frame
-- make the new frame seperate class?
-- txtCtrl boxes for MN and Sec
+- create a EVT_MENU binding for a new frame. - DONE
+- use .Show() in a new method perhaps SetFrame()? to open the new window/frame - DONE
+- make the new frame seperate class? - DONE
+- spinCtrl boxes for MN and Sec - DONE
 - Save button to bind those values to timer.Set() method
-- cancel button
-- limit range for sec to 0-60? - min/max variable for spin boxes
-  - wx.SpinCtrl()
+- cancel button -DONE
+- limit range for sec to 0-60? - min/max variable for spin boxes - DONE
 
 # the new window for setting the timer
 class SetTimer(wx.Frame):
     def __init__(self, *args, **kwargs):
         super(SetTimer, self).__init__(*args, **kwargs)
-        
+
         panel = wx.Panel(self)
-        
+
         #buttons
         svbtn = wx.Button(self, label='Save', pos=(20, 120))
-        clbtn = wx.Button(self, label='Close', pos=(70, 120))
-        
+        clbtn = wx.Button(self, label='Close', pos=(100, 120))
+
         #static text labels
-        wx.StaticText(self, 'Min', (20, 20))
-        wx.StaticText(self, 'Sec', (20, 70))
-        
+        st1 = wx.StaticText(self, label='Min', pos=(50, 20))
+        st2 = wx.StaticText(self, label='Sec', pos=(50, 70))
+
         #spin boxes for setting the timer mn/sec vals
-        self.sc1 = wx.SpinCtrl(self, -1, 'Min', (80, 15), (60, -1), min=0, max=120)
-        self.sc2 = wx.SpinCtrl(self, -1, 'Sec', (80, 65), (60, -1), min=0, max=59)
-        
+        self.sc1 = wx.SpinCtrl(self, value='0', pos=(80, 15),
+                               size=(60, -1), min=0, max=120)
+        self.sc2 = wx.SpinCtrl(self, value='0', pos=(80, 65),
+                               size=(60, -1), min=0, max=59)
+
         #button bindings
-        svbtn.Bind(EVT_BUTTON, self.OnSave)
-        clbtn.Bind(EVT_BUTTON, self.OnCancel)
-        
+        svbtn.Bind(wx.EVT_BUTTON, self.OnSave)
+        clbtn.Bind(wx.EVT_BUTTON, self.OnCancel)
+
         self.SetSize((250, 250))
         self.SetTitle("Set Timer")
         self.Centre()
-        
+        self.Show(True)
+
     def ShowTime(self, e):
         """ Show the widow """
         self.Show(True)
-        
+
     def OnSave(self, e):
         """ Apply the new timver values and close the window """
         # need to set values from display dict//Timer.GetDisplay() !!!
-        self.Close(True)
-        
-    def OnCancel(self, e)"
+        #self.Close(True)
+        pass
+    def OnCancel(self, e):
         """ Close the window withough making changes """
         self.Close(True) # need to do a Destroy()?
 
@@ -60,10 +62,22 @@ for incoororating hop additions via beer.xml file
 - audible alert?
 
 general cleanup - 
-- add backbround color to Frame
-- remove fitemTwo from the firste EVT_MENU biniding
-- create OnRefresh mehod for common clearing/redrawing/rebinding that happens in several places
+- add backbround color to Frame - DONE
+- remove fitemTwo from the first EVT_MENU biniding - DONE
+- create OnRefresh method for common clearing/redrawing/rebinding that happens in several places
 - add 00:00 timer check to OnRunning() method (stop the wxtimer)
 
 future - 
 - layout elements with grid sizers
+
+### new idea ###
+- create Timer() object globally
+- open new frame class via menu
+- use timer.Set() in that class
+- e.Skip() to pass it back to World class
+- display things via OnRefresh method detailed above
+
+
+
+
+
